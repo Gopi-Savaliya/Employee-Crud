@@ -17,10 +17,23 @@ app.post('/create', (req, res) => {
 });
 
 app.get('/employees', (req, res) => {
-    dbconnection.query('select * from employees',(err, result) => {
+    dbconnection.query('SELECT * FROM employees',(err, result) => {
         err?res.send(err):res.send(result);
     }); 
-})
+});
+
+app.post('/addcountry', (req, res) => {
+    const data = req.body;
+    dbconnection.query('INSERT INTO country_master SET ?', data, (err, result) => {
+        err?res.send(err):res.send(result);
+    });
+});
+
+app.get('/country', (req, res) => {
+    dbconnection.query('SELECT * FROM country_master', (err, result) => {
+        err?res.send(err):res.send(result);
+    });
+});
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT);
